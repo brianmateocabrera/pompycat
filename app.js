@@ -6,7 +6,7 @@ const LOGO_PUBLIC_ID = 'logo-pompy-durazno';
 function initHeaderLogo() {
   const logoImg = document.getElementById('header-logo');
   if (logoImg) {
-    logoImg.src = buildCloudinaryUrl(LOGO_PUBLIC_ID);
+    logoImg.src = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto/${LOGO_PUBLIC_ID}`;
   }
 }
 
