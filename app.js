@@ -1,7 +1,7 @@
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1g5PoVD9B1d4UsVwNgFgCWRHn5L7cGo-AXzf1unaElV8/gviz/tq?tqx=out:csv';
 const CLOUDINARY_CLOUD_NAME = 'qlugtd3x';
 const PHONE_NUMBER = '5493518189444';
-const LOGO_PUBLIC_ID = 'logo-pompy-durazno';
+const LOGO_PUBLIC_ID = 'logo-pompy-durazno.jpg';
 
 function initHeaderLogo() {
   const logoImg = document.getElementById('header-logo');
