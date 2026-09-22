@@ -1,4 +1,3 @@
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1g5PoVD9B1d4UsVwNgFgCWRHn5L7cGo-AXzf1unaElV8/gviz/tq?tqx=out:csv';
 const CLOUDINARY_CLOUD_NAME = 'qlugtd3x';
 const PHONE_NUMBER = '5493518189444';
 const LOGO_PUBLIC_ID = 'logo-pompy-durazno.jpg';
@@ -12,49 +11,13 @@ function initHeaderLogo() {
 
 async function fetchProducts() {
   try {
-    const response = await fetch(SHEET_CSV_URL);
-    if (!response.ok) throw new Error('Error');
-    const data = await response.text();
-    const rows = parseCSV(data);
-    renderCatalog(rows);
+    const response = await fetch('/api/products');
+    if (!response.ok) throw new Error('Error al cargar datos');
+    const products = await response.json();
+    renderCatalog(products);
   } catch (error) {
     console.error(error);
   }
-}
-
-function parseCSV(text) {
-  const lines = text.trim().split(/\r?\n/);
-  if (lines.length < 2) return [];
-
-  const parseLine = (line) => {
-    const values = [];
-    let insideQuotes = false;
-    let currentValue = '';
-
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-      if (char === '"') {
-        insideQuotes = !insideQuotes;
-      } else if (char === ',' && !insideQuotes) {
-        values.push(currentValue.trim().replace(/^"|"$/g, ''));
-        currentValue = '';
-      } else {
-        currentValue += char;
-      }
-    }
-    values.push(currentValue.trim().replace(/^"|"$/g, ''));
-    return values;
-  };
-
-  const headers = parseLine(lines[0]);
-
-  return lines.slice(1).map(line => {
-    const values = parseLine(line);
-    return headers.reduce((obj, header, index) => {
-      obj[header.trim()] = values[index] ? values[index].trim() : '';
-      return obj;
-    }, {});
-  });
 }
 
 function buildCloudinaryUrl(publicId) {
