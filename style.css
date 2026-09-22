@@ -11,16 +11,26 @@ body {
   padding: 2rem 1rem;
 }
 
-/* Grilla responsive para las tarjetas */
+/* Grilla responsive para las tarjetas corregida */
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 2fr));
-  gap: 2rem;
+  /* Por defecto en pantallas muy pequeñas: mínimo 2 columnas */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem; /* Reducimos el espacio para que quepan bien en celulares */
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   justify-items: center;
 }
+
+/* En pantallas medianas y grandes (desde 600px) vuelve a tu comportamiento original */
+@media (min-width: 600px) {
+  .catalog-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+}
+
 
 .card {
   position: relative;
