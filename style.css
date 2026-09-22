@@ -11,33 +11,24 @@ body {
   padding: 2rem 1rem;
 }
 
-/* Grilla responsive para las tarjetas corregida */
+/* Grilla responsive para las tarjetas */
 .catalog-grid {
   display: grid;
-  /* Por defecto en pantallas muy pequeñas: mínimo 2 columnas */
+  /* Fuerza mínimo 2 columnas en pantallas pequeñas */
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem; /* Reducimos el espacio para que quepan bien en celulares */
+  gap: 1rem;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   justify-items: center;
 }
 
-/* En pantallas medianas y grandes (desde 600px) vuelve a tu comportamiento original */
-@media (min-width: 600px) {
-  .catalog-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-  }
-}
-
-
 .card {
   position: relative;
   width: 100%;
   max-width: 320px;
   aspect-ratio: 1 / 1.618;
-  border-radius: 28px;
+  border-radius: 18px; /* Un poco más sutil en móviles */
   overflow: hidden;
   box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5),
               0 0 0 1px rgba(255, 255, 255, 0.1);
@@ -68,11 +59,11 @@ body {
 
 .favorite-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 12px; /* Más compacto en móvil */
+  right: 12px;
   z-index: 10;
-  width: 42px;
-  height: 42px;
+  width: 34px; /* Más compacto en móvil */
+  height: 34px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
@@ -92,18 +83,18 @@ body {
 }
 
 .heart-icon {
-  width: 20px;
-  height: 20px;
+  width: 16px; /* Ajustado para móvil */
+  height: 16px;
 }
 
 .card-content {
   position: absolute;
-  top: 61.8%;
+  top: 50%; /* Le damos un poco más de espacio hacia arriba en móviles */
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 10;
-  padding: 0 22px 22px 22px;
+  padding: 0 12px 14px 12px; /* Menos padding en móvil */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -111,39 +102,39 @@ body {
 
 .card-title {
   color: #ffffff;
-  font-size: 1.75rem;
+  font-size: 1.1rem; /* Texto más pequeño para que no se corte en 2 columnas */
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .card-subtitle {
   color: rgba(255, 255, 255, 0.85);
-  font-size: 0.95rem;
+  font-size: 0.8rem; /* Más pequeño en móvil */
   font-weight: 400;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .card-meta {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px; /* Menos separación en móvil */
   margin-top: auto;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .meta-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.85rem;
+  font-size: 0.75rem; /* Más compacto */
 }
 
 .meta-item svg {
-  width: 16px;
-  height: 16px;
+  width: 12px; /* Íconos más pequeños */
+  height: 12px;
 }
 
 .font-semibold {
@@ -152,12 +143,12 @@ body {
 
 .cta-btn {
   width: 100%;
-  padding: 14px 20px;
+  padding: 10px 16px; /* Botón más bajo para pantallas angostas */
   background-color: #ffffff;
   color: #0f1115;
   border: none;
   border-radius: 99px;
-  font-size: 0.95rem;
+  font-size: 0.85rem; /* Fuente reducida */
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease;
@@ -167,4 +158,66 @@ body {
 .cta-btn:hover {
   background-color: #f3f4f6;
   transform: translateY(-2px);
+}
+
+/* ==========================================
+   MEDIA QUERY: Pantallas medianas y grandes (A partir de 600px)
+   ========================================== */
+@media (min-width: 600px) {
+  .catalog-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .card {
+    border-radius: 28px;
+  }
+
+  .favorite-btn {
+    top: 18px;
+    right: 18px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .heart-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .card-content {
+    top: 61.8%;
+    padding: 0 22px 22px 22px;
+  }
+
+  .card-title {
+    font-size: 1.75rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .card-subtitle {
+    font-size: 0.95rem;
+    margin-top: 4px;
+  }
+
+  .card-meta {
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .meta-item {
+    gap: 6px;
+    font-size: 0.85rem;
+  }
+
+  .meta-item svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cta-btn {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
 }
