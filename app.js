@@ -1,6 +1,6 @@
 const CLOUDINARY_CLOUD_NAME = 'qlugtd3x';
 const PHONE_NUMBER = '5493518189444';
-const LOGO_PUBLIC_ID = 'logo-pompy-durazno.jpg';
+const LOGO_PUBLIC_ID = 'logo.jpeg';
 
 function initHeaderLogo() {
   const logoImg = document.getElementById('header-logo');
