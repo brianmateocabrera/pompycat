@@ -90,7 +90,7 @@ function renderCatalog(products) {
           </span>
         </div>
 
-        <button class="cta-btn" onclick="window.open('https://wa.me/?text=Hola,%20busco%20info%20del%20${encodeURIComponent(product.titulo)}', '_blank')">Preguntar por este artículo</button>
+        <button class="cta-btn" onclick="window.open('https://wa.me/?text=Hola,%20busco%20info%20del%20${encodeURIComponent(product.titulo)}', '_blank')">Consultame</button>
       </div>
     `;
     catalog.appendChild(article);
