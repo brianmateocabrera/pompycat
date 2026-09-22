@@ -54,10 +54,14 @@ function renderCatalog(products) {
     const waMessage = encodeURIComponent(`Hola, quiero consultar por: ${product.titulo}`);
     const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${waMessage}`;
 
+    const imgTag = product.imagen_id 
+      ? `<img src="${imageUrl}" alt="${title}" class="card-bg" loading="lazy">` 
+      : '';
+
     const article = document.createElement('article');
     article.className = 'card';
     article.innerHTML = `
-      <img src="${imageUrl}" alt="${title}" class="card-bg" loading="lazy">
+      ${imgTag}
       <div class="card-overlay"></div>
 
       <button class="favorite-btn" aria-label="Guardar en favoritos">
