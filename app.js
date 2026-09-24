@@ -102,9 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 */
 
+
+
+
+
 const CLOUDINARY_CLOUD_NAME = 'qlugtd3x';
 const PHONE_NUMBER = '5493518189444';
 const LOGO_PUBLIC_ID = 'logo.jpeg';
+const CLOUDINARY_FOLDER = 'Catálogo web';
 
 function initHeaderLogo() {
   const logoImg = document.getElementById('header-logo');
@@ -127,7 +132,15 @@ async function fetchProducts() {
 function buildCloudinaryUrl(publicId) {
   if (!publicId) return '';
   if (publicId.startsWith('http')) return publicId;
-  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto,w_800/${publicId}`;
+
+  // Si el Public ID ya incluye carpeta, no la duplicamos
+  const cleanId = publicId.startsWith(`${CLOUDINARY_FOLDER}/`) 
+    ? publicId 
+    : `${CLOUDINARY_FOLDER}/${publicId}`;
+
+  const encodedPath = cleanId.split('/').map(segment => encodeURIComponent(segment)).join('/');
+
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto,w_800/${encodedPath}`;
 }
 
 function escapeHTML(str) {
@@ -148,7 +161,6 @@ function renderCatalog(products) {
   const fragment = document.createDocumentFragment();
 
   products.forEach(product => {
-    // Normalizar claves ignorando mayúsculas/minúsculas y espacios
     const normalized = {};
     Object.keys(product).forEach(key => {
       normalized[key.trim().toLowerCase()] = product[key];
