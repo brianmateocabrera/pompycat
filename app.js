@@ -23,21 +23,18 @@ async function fetchProducts() {
 function buildCloudinaryUrl(publicId) {
   if (!publicId) return '';
   
-  // Si pegás una URL completa, la respeta
   if (publicId.startsWith('http://') || publicId.startsWith('https://')) {
     return publicId;
   }
 
-  let cleanId = publicId.trim();
-
-  // Si pegaste "v1790183613/Art.204.jpg", remueve la versión "v123456/"
-  cleanId = cleanId.replace(/^v\d+\//, '');
-
-  // Si no tiene extensión, le agrega .jpg automáticamente
+  let cleanId = publicId.trim().replace(/^v\d+\//, '');
   const hasExtension = /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(cleanId);
   const finalPath = hasExtension ? cleanId : `${cleanId}.jpg`;
 
-  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto,w_800/${encodeURI(finalPath)}`;
+  // Transformaciones seguras: Ancho máximo 600px, compresión inteligente y formato automático (WebP/AVIF)
+  const transformations = 'w_600,f_auto,q_auto';
+
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${transformations}/${encodeURI(finalPath)}`;
 }
 
 function escapeHTML(str) {
