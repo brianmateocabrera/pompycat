@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchProducts();
 });
 */
+
 const CLOUDINARY_CLOUD_NAME = 'qlugtd3x';
 const PHONE_NUMBER = '5493518189444';
 const LOGO_PUBLIC_ID = 'logo.jpeg';
@@ -119,7 +120,7 @@ async function fetchProducts() {
     const products = await response.json();
     renderCatalog(products);
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching products:', error);
   }
 }
 
@@ -141,23 +142,30 @@ function escapeHTML(str) {
 
 function renderCatalog(products) {
   const catalog = document.getElementById('catalog');
+  if (!catalog) return;
   catalog.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
 
   products.forEach(product => {
-    const visible = (product.visible || '').toUpperCase();
-    const disponible = (product.disponible || '').toUpperCase();
-    
-    if (visible === 'FALSE' || disponible === 'FALSE') return;
+    // Normalizar claves ignorando mayúsculas/minúsculas y espacios
+    const normalized = {};
+    Object.keys(product).forEach(key => {
+      normalized[key.trim().toLowerCase()] = product[key];
+    });
 
-    const rawImg = product.imagen1 || product.imagen_id || '';
-    const rawTitle = product.modelo || product['descripcion breve'] || product.id || product.titulo || '';
-    const rawSubtitle = product['descripcion breve'] || product.descripcion || product.subtitulo || '';
-    const rawCategory = product.categoria || product.marca || product.etiqueta || '';
-    const rawPrice = product.Precio || product.precio || '';
+    const isVisible = String(normalized['visible'] || 'TRUE').trim().toUpperCase();
+    const isDisponible = String(normalized['disponible'] || 'TRUE').trim().toUpperCase();
 
-    if (!rawImg && !rawTitle) return;
+    if (isVisible === 'FALSE' || isDisponible === 'FALSE') return;
+
+    const rawImg = normalized['imagen1'] || normalized['imagen_id'] || '';
+    const rawTitle = normalized['modelo'] || normalized['id'] || normalized['titulo'] || '';
+    const rawSubtitle = normalized['descripcion breve'] || normalized['subtitulo'] || '';
+    const rawCategory = normalized['categoria'] || normalized['marca'] || '';
+    const rawPrice = normalized['precio'] || '';
+
+    if (!rawTitle && !rawImg) return;
 
     const imageUrl = buildCloudinaryUrl(rawImg);
     const title = escapeHTML(rawTitle);
