@@ -23,18 +23,18 @@ async function fetchProducts() {
 function buildCloudinaryUrl(publicId) {
   if (!publicId) return '';
   
-  // Si en la planilla pegás la URL completa de Cloudinary, la devuelve tal cual
   if (publicId.startsWith('http://') || publicId.startsWith('https://')) {
     return publicId;
   }
 
-  const cleanId = publicId.trim();
-
-  // Si no tiene extensión de imagen, se le agrega .jpg
+  let cleanId = publicId.trim().replace(/^v\d+\//, '');
   const hasExtension = /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(cleanId);
   const finalPath = hasExtension ? cleanId : `${cleanId}.jpg`;
 
-  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto,w_800/${finalPath}`;
+  // Transformaciones UX: Recorte inteligente, aspecto áureo, ancho max 600px, formato y calidad auto
+  const transformations = 'c_fill,ar_1:1.618,g_auto,w_600,f_auto,q_auto';
+
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${transformations}/${encodeURI(finalPath)}`;
 }
 
 function escapeHTML(str) {
