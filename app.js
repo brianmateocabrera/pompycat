@@ -133,14 +133,17 @@ function buildCloudinaryUrl(publicId) {
   if (!publicId) return '';
   if (publicId.startsWith('http')) return publicId;
 
-  // Si el Public ID ya incluye carpeta, no la duplicamos
-  const cleanId = publicId.startsWith(`${CLOUDINARY_FOLDER}/`) 
+  // Limpiar/Asegurar nombre de carpeta sin codificación excesiva
+  const cleanFolder = 'Catálogo web';
+  const cleanId = publicId.startsWith(`${cleanFolder}/`) 
     ? publicId 
-    : `${CLOUDINARY_FOLDER}/${publicId}`;
+    : `${cleanFolder}/${publicId}`;
 
-  const encodedPath = cleanId.split('/').map(segment => encodeURIComponent(segment)).join('/');
+  // Si el publicId no termina con extensión explícita, forzamos la entrega en formato auto o jpg
+  const hasExtension = /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(cleanId);
+  const finalPath = hasExtension ? cleanId : `${cleanId}.jpg`;
 
-  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto,w_800/${encodedPath}`;
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto,w_800/${encodeURI(finalPath)}`;
 }
 
 function escapeHTML(str) {
