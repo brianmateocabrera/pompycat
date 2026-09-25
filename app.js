@@ -32,7 +32,7 @@ function buildCloudinaryUrl(publicId) {
   const finalPath = hasExtension ? cleanId : `${cleanId}.jpg`;
 
   // Transformaciones seguras: Ancho máximo 600px, compresión inteligente y formato automático (WebP/AVIF)
-  const transformations = 'w_600,e_background_removal,f_auto,q_auto';
+  const transformations = 'w_600,f_auto,q_auto';
 
   return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${transformations}/${encodeURI(finalPath)}`;
 }
