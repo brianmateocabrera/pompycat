@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,5 +27,277 @@
   </main>
 
   <script src="app.js"></script>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Catálogo de productos. Consultá disponibilidad, talles y precios directamente por WhatsApp."
+  >
+  <meta name="theme-color" content="#0f1115">
+
+  <title>Catálogo</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  >
+</head>
+
+<body>
+
+  <header class="header">
+    <button
+      class="header-btn"
+      id="menu-btn"
+      type="button"
+      aria-label="Abrir menú"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <img
+      id="header-logo"
+      class="header-logo"
+      alt="Logo"
+    >
+
+    <button
+      class="header-btn"
+      id="help-btn"
+      type="button"
+      aria-label="Ayuda"
+    >
+      <i class="fa-solid fa-circle-question"></i>
+    </button>
+  </header>
+
+  <main class="catalog-container">
+
+    <section class="catalog-toolbar" aria-label="Buscar productos">
+
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Buscar productos..."
+          autocomplete="off"
+          aria-label="Buscar productos"
+        >
+
+        <button
+          id="clear-search"
+          class="clear-search"
+          type="button"
+          aria-label="Limpiar búsqueda"
+          hidden
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div
+        id="category-filters"
+        class="category-filters"
+        aria-label="Filtrar por categoría"
+      ></div>
+
+    </section>
+
+    <section
+      id="featured-section"
+      class="catalog-section"
+      hidden
+    >
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">Selección</span>
+          <h1>Destacados</h1>
+        </div>
+      </div>
+
+      <div
+        id="featured-catalog"
+        class="catalog-grid"
+      ></div>
+    </section>
+
+    <section class="catalog-section">
+
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">Catálogo</span>
+          <h2 id="catalog-title">Todos los productos</h2>
+        </div>
+
+        <span
+          id="product-count"
+          class="product-count"
+        ></span>
+      </div>
+
+      <div
+        id="loading-state"
+        class="catalog-state"
+      >
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        <span>Cargando catálogo...</span>
+      </div>
+
+      <div
+        id="error-state"
+        class="catalog-state error-state"
+        hidden
+      >
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <strong>No se pudo cargar el catálogo</strong>
+        <button
+          id="retry-btn"
+          class="state-btn"
+          type="button"
+        >
+          Reintentar
+        </button>
+      </div>
+
+      <div
+        id="empty-state"
+        class="catalog-state"
+        hidden
+      >
+        <i class="fa-solid fa-box-open"></i>
+        <strong>No encontramos productos</strong>
+        <span>Probá con otra búsqueda o categoría.</span>
+      </div>
+
+      <div
+        id="catalog"
+        class="catalog-grid"
+      ></div>
+
+    </section>
+
+  </main>
+
+  <a
+    id="floating-whatsapp"
+    class="floating-whatsapp"
+    href="#"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Consultar por WhatsApp"
+  >
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <div
+    id="product-modal"
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    hidden
+  >
+    <div class="modal-backdrop" data-close-modal></div>
+
+    <div class="modal-content">
+
+      <button
+        id="modal-close"
+        class="modal-close"
+        type="button"
+        aria-label="Cerrar"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-gallery">
+
+        <div class="modal-image-wrapper">
+          <img
+            id="modal-image"
+            class="modal-image"
+            alt=""
+          >
+        </div>
+
+        <div
+          id="modal-thumbnails"
+          class="modal-thumbnails"
+        ></div>
+
+      </div>
+
+      <div class="modal-info">
+
+        <div class="modal-category" id="modal-category"></div>
+
+        <h2 id="modal-title"></h2>
+
+        <p
+          id="modal-description"
+          class="modal-description"
+        ></p>
+
+        <div
+          id="modal-price"
+          class="modal-price"
+        ></div>
+
+        <div
+          id="modal-details"
+          class="modal-details"
+        ></div>
+
+        <div class="modal-actions">
+
+          <button
+            id="modal-favorite"
+            class="modal-favorite"
+            type="button"
+          >
+            <i class="fa-regular fa-heart"></i>
+            <span>Guardar</span>
+          </button>
+
+          <a
+            id="modal-whatsapp"
+            class="modal-whatsapp"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fa-brands fa-whatsapp"></i>
+            Consultar por WhatsApp
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+
 </body>
 </html>
