@@ -1,4 +1,3 @@
-/*
 const CLOUDINARY_CLOUD_NAME = 'qlugtd3x';
 const PHONE_NUMBER = '5493518189444';
 const LOGO_PUBLIC_ID = 'logo.jpeg';
@@ -1092,4 +1091,3 @@ document.addEventListener(
     fetchProducts();
   }
 );
-*/
